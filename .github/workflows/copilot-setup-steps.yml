@@ -18,10 +18,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
       - name: Set up Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@1.92.0
         with:
-          toolchain: stable
-          profile: minimal
-          override: true
+          toolchain: 1.92.0
       - name: Fetch dependencies
         run: cargo fetch
