@@ -35,6 +35,9 @@ const fn groups_prime_power(p: isize, k: isize) -> isize {
     }
 }
 
+// Maximum array size for partition function computation
+const PARTITION_MAX_N: usize = 50;
+
 // Factorization structure
 struct Factorization {
     factors: [(isize, isize); 10],
@@ -49,7 +52,19 @@ const fn factorize(mut n: isize) -> Factorization {
         return Factorization { factors, count };
     }
     
-    let mut p = 2;
+    // Handle factor of 2 separately
+    let mut exp = 0;
+    while n % 2 == 0 {
+        n /= 2;
+        exp += 1;
+    }
+    if exp > 0 {
+        factors[count] = (2, exp);
+        count += 1;
+    }
+    
+    // Check odd factors only
+    let mut p = 3;
     while p * p <= n && count < 10 {
         let mut exp = 0;
         while n % p == 0 {
@@ -60,7 +75,7 @@ const fn factorize(mut n: isize) -> Factorization {
             factors[count] = (p, exp);
             count += 1;
         }
-        p += 1;
+        p += 2;  // Skip even numbers
     }
     
     if n > 1 && count < 10 {
@@ -77,7 +92,7 @@ const fn partition(n: isize) -> isize {
         0 => 1, 1 => 1, 2 => 2, 3 => 3, 4 => 5, 5 => 7, 6 => 11,
         _ => {
             let n = n as usize;
-            let mut dp = [0isize; 50];
+            let mut dp = [0isize; PARTITION_MAX_N];
             dp[0] = 1;
             let mut i = 1;
             while i <= n {
