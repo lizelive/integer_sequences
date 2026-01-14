@@ -7,15 +7,11 @@ on:
       - .github/workflows/copilot-setup-steps.yml
       - Cargo.toml
       - Cargo.lock
-      - rust-toolchain
-      - rust-toolchain.toml
   pull_request:
     paths:
       - .github/workflows/copilot-setup-steps.yml
       - Cargo.toml
       - Cargo.lock
-      - rust-toolchain
-      - rust-toolchain.toml
 
 jobs:
   copilot-setup-steps:
@@ -26,6 +22,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
       - name: Set up Rust
-        uses: dtolnay/rust-toolchain@1.92.0
+        uses: dtolnay/rust-toolchain@stable
       - name: Fetch dependencies
         run: cargo fetch
